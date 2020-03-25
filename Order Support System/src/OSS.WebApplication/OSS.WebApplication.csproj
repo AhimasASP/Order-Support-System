@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -18,16 +17,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\OSS.Common\OSS.Common.csproj" />
-    <ProjectReference Include="..\OSS.Data.Interfaces\OSS.Data.Interfaces.csproj" />
-    <ProjectReference Include="..\OSS.Data.Repositories\OSS.Data.Repositories.csproj" />
-    <ProjectReference Include="..\OSS.Domain.Logic.Interfaces\OSS.Domain.Logic.Interfaces.csproj" />
-    <ProjectReference Include="..\OSS.Domain.Logic.Services\OSS.Domain.Logic.Services.csproj" />
-    <ProjectReference Include="..\OSS.Domain\OSS.Domain.csproj" />
+    <Folder Include="Controllers\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\OSS.Common\OSS.Common.csproj" />
+    <ProjectReference Include="..\OSS.Domain.Logic.Interfaces\OSS.Domain.Logic.Interfaces.csproj" />
+    <ProjectReference Include="..\OSS.Domain\OSS.Domain.csproj" />
   </ItemGroup>
 
 

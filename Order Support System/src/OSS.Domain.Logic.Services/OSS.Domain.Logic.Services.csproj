@@ -1,11 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\OSS.Data.Interfaces\OSS.Data.Interfaces.csproj" />
     <ProjectReference Include="..\OSS.Domain.Logic.Interfaces\OSS.Domain.Logic.Interfaces.csproj" />
     <ProjectReference Include="..\OSS.Domain\OSS.Domain.csproj" />
   </ItemGroup>
