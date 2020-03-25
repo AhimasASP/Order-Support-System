@@ -34,7 +34,6 @@ namespace OSS.WebApplication.Swagger
 
             service.AddSwaggerGen(options =>
             {
-                options.DescribeAllEnumsAsStrings();
                 options.CustomSchemaIds(type => type.FullName);
                 options.SwaggerDoc(appConfig.Version,
                     new OpenApiInfo {Title = appConfig.Name, Version = appConfig.Version});

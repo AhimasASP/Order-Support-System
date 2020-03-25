@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using OSS.WebApplication.Configurations.Entity;
 using OSS.WebApplication.Swagger;
 
 namespace OSS.WebApplication
@@ -27,6 +28,7 @@ namespace OSS.WebApplication
             services.AddControllers();
             services.AddMvc();
             services.RegisterSwagger(_configuration);
+            services.RegisterEntity(_configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

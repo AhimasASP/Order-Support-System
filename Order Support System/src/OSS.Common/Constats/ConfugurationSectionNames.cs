@@ -9,5 +9,7 @@ namespace OSS.WebApplication.Extensions
     {
         public const string Application = "Application";
 
+        public const string DatabaseConfiguration = "DataBaseConfiguration";
+
     }
 }

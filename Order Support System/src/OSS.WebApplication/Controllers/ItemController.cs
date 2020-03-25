@@ -5,6 +5,7 @@ using OSS.Domain.Common.Models;
 using OSS.Domain.Common.Models.Api.Requests;
 using OSS.Domain.Common.Models.ApiModels;
 using OSS.Domain.Interfaces.Services;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace OSS.WebApplication.Controllers
 {

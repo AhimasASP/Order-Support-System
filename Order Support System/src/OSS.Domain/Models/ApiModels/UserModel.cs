@@ -1,8 +1,9 @@
-﻿namespace OSS.Domain.Common.Models.ApiModels
+﻿using OSS.Domain.Models.ApiModels;
+
+namespace OSS.Domain.Common.Models.ApiModels
 {
-	public class UserModel
+	public class UserModel : BaseModel
 	{
-		public string Id { get; set; }
 
 		public string Login { get; set; }
 

@@ -1,8 +1,9 @@
-﻿namespace OSS.Domain.Common.Models.ApiModels
+﻿using OSS.Domain.Models.ApiModels;
+
+namespace OSS.Domain.Common.Models.ApiModels
 {
-    public class ItemModel
+    public class ItemModel : BaseModel
     {
-        public string Id { get; set; }
         public string Article { get; set; }
         public string  Name { get; set; }
         public string  Description { get; set; }
