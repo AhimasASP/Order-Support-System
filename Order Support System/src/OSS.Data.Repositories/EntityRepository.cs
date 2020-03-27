@@ -6,15 +6,17 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using OSS.Data.Interfaces;
+using OSS.Domain.Common.Models.DbModels;
+using OSS.WebApplication.Configurations.Entity;
 
 namespace OSS.Data.Repositories
 {
-    public class EntityRepository<TModel> : IRepository<TModel> where TModel : class
+    public class EntityRepository<TModel> : IRepository<TModel> where TModel : BaseDbModel
     {
-        private readonly DbContext _dbContext;
+        private readonly OssDbContext _dbContext;
         private readonly DbSet<TModel> _dbSet;
 
-        public EntityRepository(DbContext dbContext)
+        public EntityRepository(OssDbContext dbContext)
         {
             _dbContext = dbContext;
             _dbSet = _dbContext.Set<TModel>();

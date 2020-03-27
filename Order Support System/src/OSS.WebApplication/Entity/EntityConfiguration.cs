@@ -18,8 +18,7 @@ namespace OSS.WebApplication.Configurations.Entity
 
 
             return service.AddDbContext<OssDbContext>(options => options
-                .UseSqlServer(dbConfig.ConnectionString)
-                .UseSqlServer(dbConfig.DbName));
+                .UseSqlServer(dbConfig.ConnectionString));
         }
     }
 }

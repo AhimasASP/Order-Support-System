@@ -7,7 +7,7 @@ using OSS.Domain.Models.ApiModels;
 
 namespace OSS.Data.Interfaces
 {
-    public interface IRepository<TModel> where TModel : class
+    public interface IRepository<TModel> where TModel : BaseDbModel
     {
         Task<List<TModel>> GetListAsync(CancellationToken token);
         Task<TModel> GetAsync(Guid id, CancellationToken token);

@@ -22,7 +22,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\OSS.Common\OSS.Common.csproj" />
+    <ProjectReference Include="..\OSS.Data.Interfaces\OSS.Data.Interfaces.csproj" />
+    <ProjectReference Include="..\OSS.Data.Repositories\OSS.Data.Repositories.csproj" />
     <ProjectReference Include="..\OSS.Domain.Logic.Interfaces\OSS.Domain.Logic.Interfaces.csproj" />
+    <ProjectReference Include="..\OSS.Domain.Logic.Services\OSS.Domain.Logic.Services.csproj" />
     <ProjectReference Include="..\OSS.Domain\OSS.Domain.csproj" />
   </ItemGroup>
 

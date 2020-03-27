@@ -6,10 +6,15 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using OSS.Data.Interfaces;
+using OSS.Data.Repositories;
+using OSS.Domain.Interfaces.Services;
+using OSS.Domain.Logic.Services;
 using OSS.WebApplication.Configurations.Entity;
 using OSS.WebApplication.Swagger;
 
@@ -28,7 +33,16 @@ namespace OSS.WebApplication
             services.AddControllers();
             services.AddMvc();
             services.RegisterSwagger(_configuration);
-            services.RegisterEntity(_configuration);
+            // services.RegisterEntity(_configuration);
+
+            services.AddScoped<DbContext, OssDbContext>();
+            services.AddDbContext<OssDbContext>(options =>
+            {
+                options.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=OssDb;Trusted_Connection=True;MultipleActiveResultSets=true");
+            });
+
+            services.AddScoped<IItemRepository, ItemRepository>();
+            services.AddScoped<IItemService, ItemService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
