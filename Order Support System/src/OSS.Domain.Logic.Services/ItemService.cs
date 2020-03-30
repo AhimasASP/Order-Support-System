@@ -7,6 +7,7 @@ using OSS.Data.Interfaces;
 using OSS.Domain.Common.Models.Api.Requests;
 using OSS.Domain.Common.Models.ApiModels;
 using OSS.Domain.Interfaces.Services;
+using ServiceStack;
 
 namespace OSS.Domain.Logic.Services
 {
@@ -19,21 +20,33 @@ namespace OSS.Domain.Logic.Services
             _repository = repository;
         }
 
-        public Task<ItemModel> CreateAsync(CreateItemRequest request, CancellationToken token)
+        public async Task<ItemModel> CreateAsync(CreateItemRequest request, CancellationToken token)
         {
-            throw new NotImplementedException();
+            var item = new ItemDbModel
+            {
+                Article = request.Article,
+                Name = request.Name,
+                Description = request.Description,
+                PurchasePrice = request.PurchasePrice,
+                Price = request.Price,
+                Photo = request.Photo,
+                CreationTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
+                ModificationTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
+                Type = request.Type
+            };
+
+            await _repository.CreateAsync(item, token);
+            return item.ConvertTo<ItemModel>();
         }
 
-        public Task<ItemModel> GetAsync(string itemId, CancellationToken token)
+        public async Task<ItemModel> GetAsync(Guid itemId, CancellationToken token)
         {
-            throw new NotImplementedException();
+            return (await _repository.GetAsync(itemId, token)).ConvertTo<ItemModel>();
         }
 
         public async Task<List<ItemModel>> GetAllAsync(CancellationToken token)
         {
-            var tmp = await _repository.GetListAsync(token);
-            
-            return new List<ItemModel>();
+             return (await _repository.GetListAsync(token)).ConvertTo<List<ItemModel>>();
         }
 
         public Task<List<ItemModel>> GetFilteredAsync(string type, CancellationToken token)
@@ -41,14 +54,27 @@ namespace OSS.Domain.Logic.Services
             throw new NotImplementedException();
         }
 
-        public Task<ItemModel> UpdateAsync(UpdateItemRequest request, CancellationToken token)
+        public async Task<ItemModel> UpdateAsync(Guid id, UpdateItemRequest request, CancellationToken token)
         {
-            throw new NotImplementedException();
+            var model = await _repository.GetAsync(id, token);
+
+                model.Article = request.Article;
+                model.Name = request.Name;
+                model.Description = request.Description;
+                model.PurchasePrice = request.PurchasePrice;
+                model.Price = request.Price;
+                model.Photo = request.Photo;
+                model.Type = request.Type;
+                model.ModificationTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+
+                await _repository.UpdateAsync(model, token);
+            return model.ConvertTo<ItemModel>();
         }
 
-        public Task<string> DeleteAsync(string id, CancellationToken token)
+        public async Task<string> DeleteAsync(Guid itemId, CancellationToken token)
         {
-            throw new NotImplementedException();
+            
+            return await _repository.DeleteAsync(itemId, token);
         }
     }
 }

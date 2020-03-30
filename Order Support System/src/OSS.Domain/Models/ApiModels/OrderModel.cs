@@ -21,6 +21,6 @@ namespace OSS.Domain.Common.Models.DbModels
         public byte CreditMonthCount { get; set; }
         public double FinalSum { get; set; }
         public string Comment { get; set; }
-        public List<string> Calculations { get; set; }
+        //public ICollection<string> Calculations { get; set; }
     }
 }

@@ -10,10 +10,10 @@ namespace OSS.Domain.Models
 {
     public interface IOssDbContext
     {
-         DbSet<UserModel> Users { get; set; }
-         DbSet<OrderModel> Orders { get; set; }
-         DbSet<CalculationModel> Calculation { get; set; }
-         DbSet<ItemModel>Items { get; set; }
+         DbSet<UserDbModel> Users { get; set; }
+         DbSet<OrderDbModel> Orders { get; set; }
+         DbSet<CalculationDbModel> Calculation { get; set; }
+         DbSet<ItemDbModel>Items { get; set; }
          Task<int> SaveChangesAsync(CancellationToken token);
 
 

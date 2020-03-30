@@ -13,7 +13,7 @@ namespace OSS.Data.Interfaces
         Task<TModel> GetAsync(Guid id, CancellationToken token);
         Task<string> CreateAsync(TModel model, CancellationToken token);
         Task<string> UpdateAsync(TModel model, CancellationToken token);
-        Task<string> DeleteAsync(TModel model, CancellationToken token);
+        Task<string> DeleteAsync(Guid id, CancellationToken token);
 
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using OSS.Domain.Common.Models;
@@ -29,7 +30,7 @@ namespace OSS.WebApplication.Controllers
         [HttpGet]
         [Route("{id}")]
         [SwaggerResponse(200, "Show item", typeof(string))]
-        public async Task<IActionResult> GetAsync(string id, CancellationToken token)
+        public async Task<IActionResult> GetAsync(Guid id, CancellationToken token)
         {
             return Ok(await _itemService.GetAsync(id, token));
         }
@@ -44,15 +45,15 @@ namespace OSS.WebApplication.Controllers
         [HttpPut]
         [Route("{id}")]
         [SwaggerResponse(201, "Modify item")]
-        public async Task<IActionResult> ModifyAsync([FromBody]UpdateItemRequest request, CancellationToken token)
+        public async Task<IActionResult> ModifyAsync(Guid id, [FromBody]UpdateItemRequest request, CancellationToken token)
         {
-            return Ok(await _itemService.UpdateAsync(request, token));
+            return Ok(await _itemService.UpdateAsync(id, request, token));
         }
 
         [HttpDelete]
         [Route("{id}")]
         [SwaggerResponse(201, "Delete item")]
-        public async Task<IActionResult> DeleteAsync(string id, CancellationToken token)
+        public async Task<IActionResult> DeleteAsync(Guid id, CancellationToken token)
         {
             return Ok(await _itemService.DeleteAsync(id, token));
         }

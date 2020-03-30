@@ -10,8 +10,6 @@ namespace OSS.Domain.Common.Models.ApiModels
         public double PurchasePrice { get; set; }
         public double Price { get; set; }
         public string Photo { get; set; }
-        public string CreationDate { get; set; }
-        public string ModificationDate { get; set; }
         public string Type { get; set; }
     }
 }

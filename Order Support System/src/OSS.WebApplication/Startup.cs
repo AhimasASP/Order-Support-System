@@ -36,10 +36,7 @@ namespace OSS.WebApplication
             // services.RegisterEntity(_configuration);
 
             services.AddScoped<DbContext, OssDbContext>();
-            services.AddDbContext<OssDbContext>(options =>
-            {
-                options.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=OssDb;Trusted_Connection=True;MultipleActiveResultSets=true");
-            });
+            services.RegisterEntity(_configuration);
 
             services.AddScoped<IItemRepository, ItemRepository>();
             services.AddScoped<IItemService, ItemService>();

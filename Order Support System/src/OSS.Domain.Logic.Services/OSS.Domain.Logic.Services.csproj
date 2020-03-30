@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="ServiceStack" Version="5.8.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\OSS.Data.Repositories\OSS.Data.Repositories.csproj" />
     <ProjectReference Include="..\OSS.Domain.Logic.Interfaces\OSS.Domain.Logic.Interfaces.csproj" />
     <ProjectReference Include="..\OSS.Domain\OSS.Domain.csproj" />

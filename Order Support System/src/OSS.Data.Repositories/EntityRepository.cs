@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -29,12 +27,12 @@ namespace OSS.Data.Repositories
 
         public async Task<TModel> GetAsync(Guid id, CancellationToken token)
         {
-            return await _dbSet.FindAsync(id, token);
+            return await _dbSet.FindAsync(id);
         }
 
         public async Task<string> CreateAsync(TModel model, CancellationToken token)
         {
-            await _dbSet.AddAsync(model, token);
+            await _dbSet.AddAsync(model, token); 
             await _dbContext.SaveChangesAsync(token);
             return "Success!";
         }
@@ -42,12 +40,14 @@ namespace OSS.Data.Repositories
         public async Task<string> UpdateAsync(TModel model, CancellationToken token)
         {
             _dbContext.Entry(model).State = EntityState.Modified;
+            //_dbSet.Update(model);
             await _dbContext.SaveChangesAsync(token);
             return "Success!";
         }
 
-        public async Task<string> DeleteAsync(TModel model, CancellationToken token)
+        public async Task<string> DeleteAsync(Guid id, CancellationToken token)
         {
+            var model = await _dbSet.FindAsync(id);
             _dbSet.Remove(model);
             await _dbContext.SaveChangesAsync(token);
             return "Success!";
