@@ -44,7 +44,7 @@ namespace OSS.Domain.Logic.Services
             return (await _repository.GetAsync(itemId, token)).ConvertTo<ItemModel>();
         }
 
-        public async Task<List<ItemModel>> GetAllAsync(CancellationToken token)
+        public async Task<List<ItemModel>> GetListAsync(CancellationToken token)
         {
              return (await _repository.GetListAsync(token)).ConvertTo<List<ItemModel>>();
         }

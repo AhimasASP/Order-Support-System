@@ -12,7 +12,7 @@ namespace OSS.Domain.Models
     {
          DbSet<UserDbModel> Users { get; set; }
          DbSet<OrderDbModel> Orders { get; set; }
-         DbSet<CalculationDbModel> Calculation { get; set; }
+         DbSet<CalculationDbModel> Calculations { get; set; }
          DbSet<ItemDbModel>Items { get; set; }
          Task<int> SaveChangesAsync(CancellationToken token);
 

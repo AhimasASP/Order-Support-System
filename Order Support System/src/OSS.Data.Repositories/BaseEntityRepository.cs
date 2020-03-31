@@ -9,12 +9,12 @@ using OSS.WebApplication.Configurations.Entity;
 
 namespace OSS.Data.Repositories
 {
-    public class EntityRepository<TModel> : IRepository<TModel> where TModel : BaseDbModel
+    public class BaseEntityRepository<TModel> : IRepository<TModel> where TModel : BaseDbModel
     {
         private readonly OssDbContext _dbContext;
         private readonly DbSet<TModel> _dbSet;
 
-        public EntityRepository(OssDbContext dbContext)
+        public BaseEntityRepository(OssDbContext dbContext)
         {
             _dbContext = dbContext;
             _dbSet = _dbContext.Set<TModel>();

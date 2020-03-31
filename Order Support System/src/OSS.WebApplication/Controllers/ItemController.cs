@@ -24,7 +24,7 @@ namespace OSS.WebApplication.Controllers
         [SwaggerResponse(200, "Show catalog", typeof(string))]
         public async Task<IActionResult> Index(CancellationToken token)
         {
-            return Ok(await _itemService.GetAllAsync(token));
+            return Ok(await _itemService.GetListAsync(token));
         }
 
         [HttpGet]

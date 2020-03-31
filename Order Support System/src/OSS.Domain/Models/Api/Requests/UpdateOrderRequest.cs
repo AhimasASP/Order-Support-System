@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
+using OSS.Domain.Common.Constats;
 
 namespace OSS.Domain.Common.Models.Api.Requests
 {
     public class UpdateOrderRequest
     {
-        public string Id { get; set; }
-        public string Status { get; set; }
+        public OrderStatus Status { get; set; }
         public string Address { get; set; }
         public string ClientName { get; set; }
         public string Phone { get; set; }

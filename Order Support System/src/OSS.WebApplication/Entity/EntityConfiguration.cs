@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OSS.WebApplication.Extensions;
+using ServiceStack;
 
 namespace OSS.WebApplication.Configurations.Entity
 {
@@ -18,7 +19,8 @@ namespace OSS.WebApplication.Configurations.Entity
 
 
             return service.AddDbContext<OssDbContext>(options => options
-                .UseSqlServer(dbConfig.ConnectionString));
+                .UseSqlServer(dbConfig.ConnectionString, b => b.MigrationsAssembly("OSS.WebApplication"))
+            );
         }
     }
 }

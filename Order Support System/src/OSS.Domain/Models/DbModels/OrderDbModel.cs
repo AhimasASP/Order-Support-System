@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using OSS.Domain.Common.Constats;
 
 namespace OSS.Domain.Common.Models.DbModels
 {
     public class OrderDbModel : BaseDbModel
     {
-        public string Status { get; set; }
+        public OrderStatus Status { get; set; }
         public string DesignerId { get; set; }
-        public string CreationDate { get; set; }
         public string Address { get; set; }
         public string ClientName { get; set; }
         public string OrderDate { get; set; }

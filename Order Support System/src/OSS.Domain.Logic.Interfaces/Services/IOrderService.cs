@@ -12,12 +12,14 @@ namespace OSS.Domain.Interfaces.Services
     {
         Task<OrderModel> CreateAsync(CreateOrderRequest request, CancellationToken token);
 
-        Task<OrderModel> GetAsync(string orderId, CancellationToken token);
+        Task<OrderModel> GetAsync(Guid id, CancellationToken token);
 
-        Task<List<OrderModel>> GetListAsync(string field, string value, CancellationToken token);
+        Task<List<OrderModel>> GetListAsync(CancellationToken token);
 
+        Task<List<OrderModel>> GetFilteredAsync(string status, CancellationToken token);
 
-        Task<OrderModel> UpdateAsync(UpdateOrderRequest request, CancellationToken token);
-        Task<string> DeleteAsync(string id, CancellationToken token);
+        Task<OrderModel> UpdateAsync(Guid id, UpdateOrderRequest request, CancellationToken token);
+
+        Task<string> DeleteAsync(Guid id, CancellationToken token);
     }
 }

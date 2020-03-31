@@ -14,7 +14,7 @@ namespace OSS.Domain.Interfaces.Services
 
         Task<ItemModel> GetAsync(Guid itemId, CancellationToken token);
 
-        Task<List<ItemModel>> GetAllAsync(CancellationToken token);
+        Task<List<ItemModel>> GetListAsync(CancellationToken token);
 
         Task<List<ItemModel>> GetFilteredAsync(string type, CancellationToken token);
 

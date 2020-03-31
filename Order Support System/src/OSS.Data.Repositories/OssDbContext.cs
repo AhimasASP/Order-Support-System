@@ -13,13 +13,13 @@ namespace OSS.WebApplication.Configurations.Entity
     {
         public OssDbContext(DbContextOptions<OssDbContext> options) : base(options)
         {
-            //Database.EnsureCreatedAsync();
+            Database.EnsureCreatedAsync().GetAwaiter().GetResult();
         }
 
 
         public DbSet<UserDbModel> Users { get; set; }
         public DbSet<OrderDbModel> Orders { get; set; }
-        public DbSet<CalculationDbModel> Calculation { get; set; }
+        public DbSet<CalculationDbModel> Calculations { get; set; }
         public DbSet<ItemDbModel> Items { get; set; }
 
 
@@ -29,6 +29,15 @@ namespace OSS.WebApplication.Configurations.Entity
 
             modelBuilder
                 .Entity<ItemDbModel>()
+                .Property(e => e.Id)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder
+                .Entity<UserDbModel>()
+                .Property(e => e.Id)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<OrderDbModel>()
                 .Property(e => e.Id)
                 .ValueGeneratedOnAdd();
         }

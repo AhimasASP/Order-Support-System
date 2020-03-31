@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using OSS.Domain.Common.Models.ApiModels;
+﻿using OSS.Domain.Common.Models.ApiModels;
 
 namespace OSS.Data.Interfaces
 {

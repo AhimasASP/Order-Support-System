@@ -7,7 +7,7 @@ using OSS.WebApplication.Configurations.Entity;
 
 namespace OSS.Data.Repositories
 {
-    public class ItemRepository : EntityRepository<ItemDbModel>, IItemRepository
+    public class ItemRepository : BaseEntityRepository<ItemDbModel>, IItemRepository
     {
         public ItemRepository(OssDbContext dbContext) : base(dbContext)
         {

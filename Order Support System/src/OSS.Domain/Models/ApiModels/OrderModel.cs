@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
+using OSS.Domain.Common.Constats;
 using OSS.Domain.Models.ApiModels;
 
 namespace OSS.Domain.Common.Models.DbModels
 {
     public class OrderModel : BaseModel
     {
-        public string Status { get; set; }
+        public OrderStatus Status { get; set; }
         public string DesignerId { get; set; }
-        public string CreationDate { get; set; }
         public string Address { get; set; }
         public string ClientName { get; set; }
         public string Phone { get; set; }
