@@ -1,11 +1,16 @@
-﻿using System.Collections.Generic;
-using OSS.Domain.Common.Constats;
+﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
+using System.Text;
+using OSS.Common.Constants;
+using OSS.Domain.Models.ApiModels;
 
-namespace OSS.Domain.Common.Models.Api.Requests
+namespace OSS.Domain.Common.Models.DbModels
 {
-    public class UpdateOrderRequest
+    public class OrderModel : BaseModel
     {
         public OrderStatus Status { get; set; }
+        public string DesignerId { get; set; }
         public string Address { get; set; }
         public string ClientName { get; set; }
         public string Phone { get; set; }
@@ -16,6 +21,6 @@ namespace OSS.Domain.Common.Models.Api.Requests
         public byte CreditMonthCount { get; set; }
         public double FinalSum { get; set; }
         public string Comment { get; set; }
-        // public ICollection<string> Calculations { get; set; }
+        //public ICollection<string> Calculations { get; set; }
     }
 }

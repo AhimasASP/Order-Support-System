@@ -1,8 +1,8 @@
-﻿using System.Reflection;
+﻿using OSS.Common;
 
-namespace OSS.Domain.Common.Models.Api.Requests
+namespace OSS.Domain.Common.Models.DbModels
 {
-	public class CreateUserRequest
+	public class UserDbModel : BaseDbModel
 	{
 		public string Login { get; set; }
 
@@ -12,6 +12,7 @@ namespace OSS.Domain.Common.Models.Api.Requests
 
 		public string LastName { get; set; }
         public string Photo { get; set; }
-        public UserRoles Role { get; set; }
+
+		public UserRoles Role { get; set; }
 	}
 }

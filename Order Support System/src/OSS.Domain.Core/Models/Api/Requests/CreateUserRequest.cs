@@ -1,11 +1,12 @@
-﻿using OSS.Domain.Models.ApiModels;
+﻿using OSS.Common;
 
-namespace OSS.Domain.Common.Models.ApiModels
+namespace OSS.Domain.Common.Models.Api.Requests
 {
-	public class UserModel : BaseModel
+	public class CreateUserRequest
 	{
-
 		public string Login { get; set; }
+
+		public string Password { get; set; }
 
 		public string FirstName { get; set; }
 

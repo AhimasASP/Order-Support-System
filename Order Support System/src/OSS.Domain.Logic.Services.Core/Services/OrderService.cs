@@ -1,12 +1,12 @@
-﻿using OSS.Data.Interfaces;
-using OSS.Domain.Common.Constats;
-using OSS.Domain.Common.Models.Api.Requests;
+﻿using OSS.Domain.Common.Models.Api.Requests;
 using OSS.Domain.Common.Models.DbModels;
 using OSS.Domain.Interfaces.Services;
 using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using OSS.Common.Constants;
+using OSS.Data.Interfaces;
 using ServiceStack;
 
 namespace OSS.Domain.Logic.Services
@@ -25,8 +25,9 @@ namespace OSS.Domain.Logic.Services
         {
             var model = new OrderDbModel()
             {
-                Status = OrderStatus.New,
+
                 //DesignerId = 
+                Status = OrderStatus.New,
                 CreationTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
                 Address = request.Address,
                 ClientName = request.ClientName,

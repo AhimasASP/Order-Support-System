@@ -1,4 +1,4 @@
-﻿namespace OSS.Domain.Common.Models
+﻿namespace OSS.Common
 {
 	public enum UserRoles
 	{

@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ServiceStack" Version="5.8.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OSS.Common.Core\OSS.Common.csproj" />
+    <ProjectReference Include="..\OSS.Data.Interfaces.Core\OSS.Data.Interfaces.csproj" />
+    <ProjectReference Include="..\OSS.Data.Repositories.Core\OSS.Data.Repositories.csproj" />
+    <ProjectReference Include="..\OSS.Domain.Core\OSS.Domain.csproj" />
+    <ProjectReference Include="..\OSS.Domain.Logic.Interfaces.Core\OSS.Domain.Logic.Interfaces.csproj" />
+  </ItemGroup>
+
+</Project>

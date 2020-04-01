@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace OSS.WebApplication.Extensions
+﻿namespace OSS.Common.Constants
 {
     public abstract class ConfigurationSectionNames
     {

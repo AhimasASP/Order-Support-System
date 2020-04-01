@@ -1,4 +1,6 @@
-﻿namespace OSS.Domain.Common.Models.Api.Requests
+﻿using OSS.Common;
+
+namespace OSS.Domain.Common.Models.Api.Requests
 {
     public class UpdateUserRequest
     {

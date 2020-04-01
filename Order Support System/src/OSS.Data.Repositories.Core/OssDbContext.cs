@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using OSS.Domain.Common.Models.ApiModels;
 using OSS.Domain.Common.Models.DbModels;
@@ -9,7 +6,7 @@ using OSS.Domain.Models;
 
 namespace OSS.WebApplication.Configurations.Entity
 {
-    public class OssDbContext : DbContext, IOssDbContext
+    public class OssDbContext : IdentityDbContext, IOssDbContext
     {
         public OssDbContext(DbContextOptions<OssDbContext> options) : base(options)
         {

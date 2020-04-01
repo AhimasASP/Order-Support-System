@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using OSS.Domain.Common.Constats;
+using OSS.Common.Constants;
 
 namespace OSS.Domain.Common.Models.DbModels
 {

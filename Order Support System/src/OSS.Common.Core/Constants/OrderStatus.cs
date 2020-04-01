@@ -1,4 +1,4 @@
-﻿namespace OSS.Domain.Common.Constats
+﻿namespace OSS.Common.Constants
 {
     public enum OrderStatus
     {
