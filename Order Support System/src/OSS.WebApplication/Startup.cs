@@ -33,7 +33,6 @@ namespace OSS.WebApplication
             services.AddControllers();
             services.AddMvc();
             services.RegisterSwagger(_configuration);
-            // services.RegisterEntity(_configuration);
 
             services.AddScoped<DbContext, OssDbContext>();
             services.RegisterEntity(_configuration);

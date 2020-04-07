@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
-using OSS.Domain.Common.Models.Api.Configs;
 using OSS.WebApplication.Extensions;
 
 namespace OSS.WebApplication.Swagger

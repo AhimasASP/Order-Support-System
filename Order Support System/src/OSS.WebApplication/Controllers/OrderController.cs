@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using OSS.Domain.Common.Models;
 using OSS.Domain.Common.Models.Api.Requests;
 using OSS.Domain.Common.Models.DbModels;
 using OSS.Domain.Interfaces.Services;
