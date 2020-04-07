@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -6,7 +7,7 @@ using OSS.Domain.Common.Models;
 using OSS.Domain.Common.Models.Api.Requests;
 using OSS.Domain.Common.Models.ApiModels;
 using OSS.Domain.Interfaces.Services;
-using Swashbuckle.Swagger.Annotations;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace OSS.WebApplication.Controllers
 {
@@ -23,25 +24,25 @@ namespace OSS.WebApplication.Controllers
 
 		[HttpGet]
 		[Route("{id}")]
-		[Authorize]
+		//[Authorize]
 		[SwaggerResponse(200, "Show user details", typeof(string))]
-		public async Task<IActionResult> GetByIdAsync(string id, CancellationToken cancellationToken)
+		public async Task<IActionResult> GetAsync(Guid id, CancellationToken cancellationToken)
 		{
 			return Ok(await _userService.GetAsync(id, cancellationToken));
 		}
 
 		[HttpGet]
 		[SwaggerResponse(200, "Show users list", typeof(string))]
-		[Authorize]
+		//[Authorize]
 		[SwaggerResponse(200, "Show user list")]
-		public async Task<IActionResult> GetAllAsync(CancellationToken token)
+		public async Task<IActionResult> Index(CancellationToken token)
 		{
 			return Ok(await _userService.GetListAsync(token));
 		}
 
 		[HttpPost]
         [SwaggerResponse(201, "Add new user", typeof(string))]
-		[Authorize]
+		//[Authorize]
         public async Task<IActionResult> CreateAsync([FromBody]CreateUserRequest request, CancellationToken cancellationToken)
 		{
 			return Ok(await _userService.CreateAsync(request, cancellationToken));
@@ -50,17 +51,17 @@ namespace OSS.WebApplication.Controllers
 		[HttpPut]
 		[Route("{id}")]
         [SwaggerResponse(201, "Modify user", typeof(string))]
-		[Authorize]
-        public async Task<IActionResult> ModifyAsync(string id, [FromBody] UpdateUserRequest request, CancellationToken token)
+		//[Authorize]
+        public async Task<IActionResult> ModifyAsync(Guid id, [FromBody] UpdateUserRequest request, CancellationToken token)
 		{
-			return Ok(await _userService.UpdateAsync(request, token));
+			return Ok(await _userService.UpdateAsync(id, request, token));
 		}
 
 		[HttpDelete]
 		[Route("{id}")]
 		[SwaggerResponse(201, "Delete user")]
-		[Authorize]
-		public async Task<IActionResult> DeleteAsync(string id, CancellationToken token)
+		//[Authorize]
+		public async Task<IActionResult> DeleteAsync(Guid id, CancellationToken token)
 		{
 			return Ok(await _userService.DeleteAsync(id, token));
 		}
@@ -70,7 +71,7 @@ namespace OSS.WebApplication.Controllers
 		[HttpPost]
 		[Route("{id}/action")]
 		[SwaggerResponse(201, "Block user")]
-		public async Task<IActionResult> BlockAsync(string id, CancellationToken token)
+		public async Task<IActionResult> BlockAsync(Guid id, CancellationToken token)
 		{
 			return Ok(await _userService.DeleteAsync(id, token));
 		}

@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using OSS.Domain.Common.Models;
 using OSS.Domain.Common.Models.Api.Requests;
 using OSS.Domain.Common.Models.DbModels;
 using OSS.Domain.Interfaces.Services;
-using Swashbuckle.Swagger.Annotations;
+using Swashbuckle.AspNetCore.Annotations;
 
 
 namespace OSS.WebApplication.Controllers
@@ -25,21 +25,20 @@ namespace OSS.WebApplication.Controllers
         [SwaggerResponse(200, "Get orders list")]
         public async Task<IActionResult> Index(CancellationToken token)
         {
-            return Ok(await _orderService.GetListAsync("null", "0", token));
+            return Ok(await _orderService.GetListAsync(token));
         }
 
         [HttpGet]
         [SwaggerResponse(200, "Get designer's order list")]
         public async Task<IActionResult> DesignerOrders(CancellationToken token)
         {
-            //var value = _jwtTokenReader.GetTokenClaimValue("UserId");
-            return Ok(/*await _orderService.GetListAsync("DesignerId", value, token)*/);
+            return Ok();
         }
 
         [HttpGet]
         [Route("{id}")]
         [SwaggerResponse(200, "Show details", typeof(string))]
-        public async Task<IActionResult> GetByIdAsync(string id, CancellationToken token)
+        public async Task<IActionResult> GetAsync(Guid id, CancellationToken token)
         {
             return Ok(await _orderService.GetAsync(id, token));
         }
@@ -55,16 +54,16 @@ namespace OSS.WebApplication.Controllers
         [HttpPut]
         [Route("{id}")]
         [SwaggerResponse(201, "Modify order")]
-        public async Task<IActionResult> ModifyAsync(string id, [FromBody] UpdateOrderRequest request,
+        public async Task<IActionResult> ModifyAsync(Guid id, [FromBody]UpdateOrderRequest request,
             CancellationToken token)
         {
-            return Ok(await _orderService.UpdateAsync(request, token));
+            return Ok(await _orderService.UpdateAsync(id, request, token));
         }
 
         [HttpDelete]
         [Route("{id}")]
         [SwaggerResponse(201, "Delete order")]
-        public async Task<IActionResult> Delete(string id, CancellationToken token)
+        public async Task<IActionResult> Delete(Guid id, CancellationToken token)
         {
             return Ok(await _orderService.DeleteAsync(id, token));
         }
