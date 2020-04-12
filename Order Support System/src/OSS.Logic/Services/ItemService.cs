@@ -26,6 +26,8 @@ namespace OSS.Domain.Logic.Services
                 Article = request.Article,
                 Name = request.Name,
                 Description = request.Description,
+                Size = request.Size,
+                Currency = request.Currency,
                 PurchasePrice = request.PurchasePrice,
                 Price = request.Price,
                 Photo = request.Photo,
