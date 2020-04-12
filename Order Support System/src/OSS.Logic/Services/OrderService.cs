@@ -3,10 +3,14 @@ using OSS.Domain.Common.Models.DbModels;
 using OSS.Domain.Interfaces.Services;
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using OSS.Common.Constants;
 using OSS.Data.Interfaces;
+using OSS.WebApplication.Configurations.Entity;
 using ServiceStack;
 
 namespace OSS.Domain.Logic.Services
@@ -15,20 +19,23 @@ namespace OSS.Domain.Logic.Services
     {
 
         private readonly IOrderRepository _repository;
+        private readonly IHttpContextAccessor _accessor;
 
-        public OrderService(IOrderRepository repository)
+        public OrderService(IOrderRepository repository, IHttpContextAccessor accessor)
         {
             _repository = repository;
+            _accessor = accessor;
         }
 
         public async Task<OrderModel> CreateAsync(CreateOrderRequest request, CancellationToken token)
         {
+            var designerId = _accessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var model = new OrderDbModel()
             {
-
-                //DesignerId = 
+                DesignerId = designerId,
                 Status = OrderStatus.New,
-                CreationTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
+                CreationDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
+                ModificationDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
                 Address = request.Address,
                 ClientName = request.ClientName,
                 Phone = request.Phone,
@@ -65,7 +72,7 @@ namespace OSS.Domain.Logic.Services
         public async Task<OrderModel> UpdateAsync(Guid id, UpdateOrderRequest request, CancellationToken token)
         {
             var model = await _repository.GetAsync(id, token);
-            model.ModificationTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            model.ModificationDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             model.Status = request.Status;
             model.Address = request.Address;
             model.ClientName = request.ClientName;

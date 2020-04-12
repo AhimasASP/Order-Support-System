@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OSS.Domain.Common.Models.Api.Requests;
 using OSS.Domain.Common.Models.ApiModels;
@@ -10,6 +11,7 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace OSS.WebApplication.Controllers
 {
     [Route("[controller]/[action]")]
+    [Authorize]
     public class ItemController : Controller
     {
         private readonly IItemService _itemService;

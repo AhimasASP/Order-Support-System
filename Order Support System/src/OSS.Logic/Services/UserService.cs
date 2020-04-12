@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using OSS.Data.Interfaces;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using OSS.Domain.Common.Models.Api.Requests;
 using OSS.Domain.Common.Models.ApiModels;
 using OSS.Domain.Common.Models.DbModels;
 using OSS.Domain.Interfaces.Services;
+using OSS.WebApplication.Configurations.Entity;
 using ServiceStack;
 
 namespace OSS.Domain.Logic.Services
@@ -14,63 +17,80 @@ namespace OSS.Domain.Logic.Services
     public class UserService : IUserService
     {
 
-        private readonly IUserRepository _repository;
+        private readonly UserManager<UserDbModel> _manager;
 
-        public UserService(IUserRepository repository)
+        public UserService(UserManager<UserDbModel> manager)
         {
-            _repository = repository;
+            _manager = manager;
         }
 
         public async Task<UserModel> CreateAsync(CreateUserRequest request, CancellationToken token)
         {
-            var model = new UserDbModel
+            UserDbModel user = new UserDbModel
             {
-                Login = request.Login,
-                Password = request.Password,
+                UserName = request.UserName,
                 FirstName = request.FirstName,
                 LastName = request.LastName,
+                PhoneNumber = request.Phone,
+                Email = request.Email,
                 Photo = request.Photo,
-                Role = request.Role,
-                CreationTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
-                ModificationTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
+                CreationDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
+                ModificationDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
             };
-            await _repository.CreateAsync(model, token);
-            return model.ConvertTo<UserModel>();
+
+            var result = await _manager.CreateAsync(user, request.Password);
+            if ((await (_manager.AddToRoleAsync(user, "user"))).Succeeded)
+            {
+                user.Photo = "role added!";
+            }
+
+            if (result.Succeeded)
+            {
+                return user.ConvertTo<UserModel>();
+            }
+
+            return user.ConvertTo<UserModel>();
+
         }
 
         public async Task<UserModel> GetAsync(Guid id, CancellationToken token)
         {
-            return (await _repository.GetAsync(id, token)).ConvertTo<UserModel>();
+            return (await _manager.FindByIdAsync(id.ToString())).ConvertTo<UserModel>();
         }
 
         public async Task<List<UserModel>> GetListAsync(CancellationToken token)
         {
-            return (await _repository.GetListAsync(token)).ConvertTo<List<UserModel>>();
+            return (await _manager.Users.ToListAsync(token)).ConvertTo<List<UserModel>>();
         }
 
         public Task<List<UserModel>> GetFilteredAsync(string type, CancellationToken token)
         {
             throw new NotImplementedException();
         }
-
         public async Task<UserModel> UpdateAsync(Guid id, UpdateUserRequest request, CancellationToken token)
         {
-            var model = await _repository.GetAsync(id, token);
-            model.Login = request.Login;
-            model.FirstName = request.FirstName;
-            model.LastName = request.LastName;
-            model.Photo = request.Photo;
-            model.Role = request.Role;
-            model.ModificationTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            var user = await _manager.FindByIdAsync(id.ToString());
+            user.UserName = request.UserName;
+            user.FirstName = request.FirstName;
+            user.LastName = request.LastName;
+            user.PhoneNumber = request.Phone;
+            user.Email = request.Email;
+            user.Photo = request.Photo;
+            user.ModificationDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
 
-            await _repository.UpdateAsync(model, token);
+            await _manager.UpdateAsync(user);
 
-            return model.ConvertTo<UserModel>();
+            return user.ConvertTo<UserModel>();
         }
-
         public async Task<string> DeleteAsync(Guid id, CancellationToken token)
         {
-            return await _repository.DeleteAsync(id, token);
+            var result = await _manager.DeleteAsync(await _manager.FindByIdAsync(id.ToString()));
+            if (result.Succeeded)
+            {
+                return "Ok!";
+            }
+
+            return "Fail";
         }
     }
 }

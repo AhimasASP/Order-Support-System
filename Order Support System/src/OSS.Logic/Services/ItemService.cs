@@ -29,8 +29,8 @@ namespace OSS.Domain.Logic.Services
                 PurchasePrice = request.PurchasePrice,
                 Price = request.Price,
                 Photo = request.Photo,
-                CreationTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
-                ModificationTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
+                CreationDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
+                ModificationDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
                 Type = request.Type
             };
 
@@ -64,7 +64,7 @@ namespace OSS.Domain.Logic.Services
                 model.Price = request.Price;
                 model.Photo = request.Photo;
                 model.Type = request.Type;
-                model.ModificationTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                model.ModificationDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
 
                 await _repository.UpdateAsync(model, token);
             return model.ConvertTo<ItemModel>();
