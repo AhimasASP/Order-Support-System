@@ -7,18 +7,8 @@ using OSS.Domain.Common.Models.DbModels;
 
 namespace OSS.Domain.Interfaces.Services
 {
-    public interface IOrderService
+    public interface IOrderService : IService<OrderModel, CreateOrderRequest, UpdateOrderRequest>
     {
-        Task<OrderModel> CreateAsync(CreateOrderRequest request, CancellationToken token);
-
-        Task<OrderModel> GetAsync(Guid id, CancellationToken token);
-
-        Task<List<OrderModel>> GetListAsync(CancellationToken token);
-
-        Task<List<OrderModel>> GetFilteredAsync(string status, CancellationToken token);
-
-        Task<OrderModel> UpdateAsync(Guid id, UpdateOrderRequest request, CancellationToken token);
-
-        Task<string> DeleteAsync(Guid id, CancellationToken token);
+      
     }
 }
