@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -13,7 +14,7 @@ namespace OSS.Domain.Interfaces.Services
 
         Task<List<TModel>> GetListAsync(CancellationToken token);
 
-        Task<List<TModel>> GetFilteredAsync(string type, CancellationToken token);
+        Task<List<TModel>> GetFilteredAsync(string param, CancellationToken token);
 
         Task<TModel> UpdateAsync(Guid id, TUpdateRequest request, CancellationToken token);
 

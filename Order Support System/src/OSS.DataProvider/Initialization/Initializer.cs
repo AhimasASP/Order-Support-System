@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -64,7 +65,6 @@ namespace OSS.WebApplication.Configurations.Entity
             }
 
             await context.SaveChangesAsync();
-            //await context.Items.AddRangeAsync(items.items);
         }
     }
 
