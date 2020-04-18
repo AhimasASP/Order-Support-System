@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -35,7 +36,15 @@ namespace OSS.WebApplication.Controllers
         {
             return Ok(await _itemService.GetAsync(id, token));
         }
-        
+
+        [HttpGet]
+        [Route("{param}")]
+        [SwaggerResponse(200, "Search by param", typeof(string))]
+        public async Task<IActionResult> GetFilteredAsync(string param, CancellationToken token)
+        {
+            return Ok(await _itemService.GetFilteredAsync(param, token));
+        }
+
         [HttpPost]
         [SwaggerResponse(201, "Add new item")]
         public async Task<IActionResult>  CreateAsync([FromBody]CreateItemRequest request, CancellationToken token)

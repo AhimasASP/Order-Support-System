@@ -23,10 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Extensions\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\OSS.Common\OSS.Common.csproj" />
     <ProjectReference Include="..\OSS.DataProvider\OSS.DataProvider.csproj" />
     <ProjectReference Include="..\OSS.Logic\OSS.Logic.csproj" />

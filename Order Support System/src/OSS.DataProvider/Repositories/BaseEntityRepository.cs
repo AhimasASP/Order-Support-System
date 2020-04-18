@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -29,6 +31,12 @@ namespace OSS.Data.Repositories
         {
             return await _dbSet.FindAsync(id);
         }
+
+        public async Task<List<TModel>> GetFilteredAsync(Expression<Func<TModel, bool>> expression, CancellationToken token)
+        {
+            return await _dbSet.Where(expression).ToListAsync<TModel>(cancellationToken: token);
+        }
+
 
         public async Task<string> CreateAsync(TModel model, CancellationToken token)
         {

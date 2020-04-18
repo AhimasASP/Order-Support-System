@@ -29,6 +29,7 @@ namespace OSS.WebApplication
                     Initializer initializer = new Initializer();
                     await initializer.RoleInitializer(context, roleManager);
                     await initializer.UserInitializer(context, userManager);
+                    await initializer.ItemInitializer(context);
                 }
                 catch (Exception e)
                 {

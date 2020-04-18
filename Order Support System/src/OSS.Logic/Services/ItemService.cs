@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using OSS.Data.Interfaces;
@@ -26,6 +27,8 @@ namespace OSS.Domain.Logic.Services
                 Article = request.Article,
                 Name = request.Name,
                 Description = request.Description,
+                Size = request.Size,
+                Currency = request.Currency,
                 PurchasePrice = request.PurchasePrice,
                 Price = request.Price,
                 Photo = request.Photo,
@@ -48,10 +51,24 @@ namespace OSS.Domain.Logic.Services
              return (await _repository.GetListAsync(token)).ConvertTo<List<ItemModel>>();
         }
 
-        public Task<List<ItemModel>> GetFilteredAsync(string type, CancellationToken token)
+        public async Task<List<ItemModel>> GetFilteredAsync(string param, CancellationToken token)
         {
-            throw new NotImplementedException();
+            param = param.ToLower();
+
+            List<ItemDbModel> list =  await _repository.GetFilteredAsync(_=>_.Article.ToLower().Contains(param), token);
+
+            if (list.Count != 0) return list.ConvertTo<List<ItemModel>>();
+
+            list = await _repository.GetFilteredAsync(_ => _.Name.ToLower().Contains(param), token);
+
+            if (list.Count != 0) return list.ConvertTo<List<ItemModel>>();
+
+            list = await _repository.GetFilteredAsync(_ => _.Description.ToLower().Contains(param), token);
+
+            return list.ConvertTo<List<ItemModel>>();
+
         }
+
 
         public async Task<ItemModel> UpdateAsync(Guid id, UpdateItemRequest request, CancellationToken token)
         {
