@@ -43,6 +43,7 @@ namespace OSS.WebApplication
 
             services.AddScoped<IItemRepository, ItemRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
 
             services.AddScoped<IItemService, ItemService>();
             services.AddScoped<IUserService, UserService>();
