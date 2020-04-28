@@ -13,8 +13,10 @@ namespace OSS.Data.Interfaces
         Task<List<UserDbModel>> GetListAsync();
         Task<UserDbModel> GetAsync(string id);
         Task<List<UserDbModel>> GetFilteredAsync(Expression<Func<UserDbModel, bool>> expression);
-        Task<bool> CreateAsync(UserDbModel model);
+        Task<string> CreateAsync(UserDbModel model);
         Task<bool> UpdateAsync(UserDbModel model);
         Task<bool> SoftDeleteAsync(string id);
+        Task<bool> AddUserToRoleAsync(string id, string role);
+        Task<bool> RemoveUserFromRoleAsync(string id, string role);
     }
 }

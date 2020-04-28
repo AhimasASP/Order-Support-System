@@ -231,7 +231,10 @@ namespace OSS.WebApplication.Migrations
                     b.Property<string>("Article")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CreationTime")
+                    b.Property<string>("CreationDate")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Currency")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
@@ -240,7 +243,7 @@ namespace OSS.WebApplication.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<string>("ModificationTime")
+                    b.Property<string>("ModificationDate")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -254,6 +257,9 @@ namespace OSS.WebApplication.Migrations
 
                     b.Property<double>("PurchasePrice")
                         .HasColumnType("float");
+
+                    b.Property<string>("Size")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Type")
                         .HasColumnType("nvarchar(max)");
@@ -272,13 +278,10 @@ namespace OSS.WebApplication.Migrations
                     b.Property<string>("CreationDate")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CreationTime")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<string>("ModificationTime")
+                    b.Property<string>("ModificationDate")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -304,7 +307,7 @@ namespace OSS.WebApplication.Migrations
                     b.Property<string>("Comment")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CreationTime")
+                    b.Property<string>("CreationDate")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<byte>("CreditMonthCount")
@@ -322,7 +325,7 @@ namespace OSS.WebApplication.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<string>("ModificationTime")
+                    b.Property<string>("ModificationDate")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("OrderDate")
