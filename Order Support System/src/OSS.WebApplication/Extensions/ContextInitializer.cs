@@ -15,6 +15,7 @@ namespace OSS.WebApplication.Extensions
             await seedService.SeedRoles();
             await seedService.SeedUsers();
             await seedService.SeedItems();
+            await seedService.SeedOrders();
         }
         
     }

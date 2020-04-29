@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using OSS.Data.Interfaces;
+using OSS.Domain.Common.Models.DbModels;
 using OSS.Domain.Common.SeedData;
 using OSS.Domain.Interfaces.Services;
 using OSS.WebApplication.Configurations.Entity;
@@ -82,6 +84,12 @@ namespace OSS.Domain.Logic.Services
 
              foreach (var order in orders.orders)
              {
+                 if (order.DesignerId == null)
+                 {
+                     var user =  await _userRepository.GetFilteredAsync(_ => _.UserName.ToLower() == "designer");
+                     order.DesignerId = user[0].Id;
+                 }
+                     
                  order.CreationDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                  order.ModificationDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                  await _orderRepository.CreateAsync(order, CancellationToken.None);

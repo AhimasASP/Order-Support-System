@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
@@ -49,7 +50,7 @@ namespace OSS.Data.Repositories
 
         public Task<List<UserDbModel>> GetFilteredAsync(Expression<Func<UserDbModel, bool>> expression)
         {
-            throw new NotImplementedException();
+            return _userManager.Users.Where(expression).ToListAsync();
         }
 
         public async Task<string> CreateAsync(UserDbModel model)
