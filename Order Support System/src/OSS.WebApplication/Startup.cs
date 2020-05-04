@@ -15,6 +15,7 @@ using OSS.Data.Interfaces;
 using OSS.Data.Repositories;
 using OSS.Domain.Interfaces.Services;
 using OSS.Domain.Logic.Services;
+using OSS.Domain.Services.Search;
 using OSS.WebApplication.Configurations.Entity;
 using OSS.WebApplication.Configurations.Identity;
 using OSS.WebApplication.Swagger;
@@ -38,15 +39,18 @@ namespace OSS.WebApplication
             services.AddScoped<DbContext, OssDbContext>();
             services.RegisterEntity(_configuration);
             services.RegisterIdentity();
-            //services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
             services.AddHttpContextAccessor();
 
             services.AddScoped<IItemRepository, ItemRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IRoleRepository, RoleRepository>();
 
             services.AddScoped<IItemService, ItemService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<ISeedService, SeedService>();
+            services.AddScoped<ISearchService, SearchService>();
             services.AddScoped<IAuthorizationService, AuthorizationService>();
         }
 
