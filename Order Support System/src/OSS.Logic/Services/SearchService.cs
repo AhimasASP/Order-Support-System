@@ -20,13 +20,13 @@ namespace OSS.Domain.Services.Search
             _orderRepository = orderRepository;
         }
 
-        public async Task<List<SearchResponseModel>> SearchAsync(string param)
+        public async Task<List<SearchResponseModel>> SearchAsync(string param, CancellationToken token)
         {
             param = param.ToLower();
 
             List<SearchResponseModel> searchList = new List<SearchResponseModel>();
-            searchList.AddRange(await GetSearchItemListAsync(param, CancellationToken.None));
-            searchList.AddRange(await GetSearchOrderListAsync(param, CancellationToken.None));
+            searchList.AddRange(await GetSearchItemListAsync(param, token));
+            searchList.AddRange(await GetSearchOrderListAsync(param, token));
 
             return searchList;
 
@@ -47,7 +47,7 @@ namespace OSS.Domain.Services.Search
                 searchItemList.Add(new SearchResponseModel()
                 {
                     Type = "item",
-                    Id = item.Id,
+                    Id = item.Id.ToString(),
                     Article = item.Article,
                     Name = item.Name,
                     Description = item.Description
@@ -73,7 +73,7 @@ namespace OSS.Domain.Services.Search
                 searchOrderList.Add(new SearchResponseModel()
                 {
                     Type = "order",
-                    Id = order.Id,
+                    Id = order.Id.ToString(),
                     Article = order.OrderNumber,
                     Name = order.ClientName,
                     Description = order.Address + " " + order.Phone
@@ -82,5 +82,5 @@ namespace OSS.Domain.Services.Search
 
             return searchOrderList;
         }
-    }
+        }
 }

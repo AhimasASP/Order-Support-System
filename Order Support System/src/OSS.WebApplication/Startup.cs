@@ -15,6 +15,7 @@ using OSS.Data.Interfaces;
 using OSS.Data.Repositories;
 using OSS.Domain.Interfaces.Services;
 using OSS.Domain.Logic.Services;
+using OSS.Domain.Services.Search;
 using OSS.WebApplication.Configurations.Entity;
 using OSS.WebApplication.Configurations.Identity;
 using OSS.WebApplication.Swagger;
@@ -49,6 +50,7 @@ namespace OSS.WebApplication
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<ISeedService, SeedService>();
+            services.AddScoped<ISearchService, SearchService>();
             services.AddScoped<IAuthorizationService, AuthorizationService>();
         }
 

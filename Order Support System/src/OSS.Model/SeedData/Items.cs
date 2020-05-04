@@ -9,7 +9,7 @@ namespace OSS.WebApplication.Configurations.Entity
         {
             new ItemDbModel()
             {
-                Article = "173L6100   MPL   V500  NI",
+                Article = "173L6100   MPL   V500  NI 123_321",
                 Name = "Ответная планка CLIP",
                 Description = "Ответная планка CLIP крестообразная под саморез",
                 Size = "",
@@ -22,7 +22,7 @@ namespace OSS.WebApplication.Configurations.Entity
             new ItemDbModel()
             {
                 Article = "71M2550   MB    V250  NI",
-                Name = "Петля CLIP 100°",
+                Name = "Петля CLIP 100°123_321",
                 Description = "Петля CLIP 100°, накладная",
                 Size = "",
                 Currency = "EUR",
@@ -35,7 +35,7 @@ namespace OSS.WebApplication.Configurations.Entity
             {
                 Article = "71M2650   MB    V250  NI",
                 Name = "Петля CLIP 100°",
-                Description = "Петля CLIP 100°, пoлунакладная",
+                Description = "Петля CLIP 100°, пoлунакладная123_321",
                 Size = "",
                 Currency = "EUR",
                 PurchasePrice = 0,
@@ -45,7 +45,7 @@ namespace OSS.WebApplication.Configurations.Entity
             },
             new ItemDbModel()
             {
-                Article = "71M2750   MB    V250  NI",
+                Article = "71M2750   MB    V250  NI123_321",
                 Name = "Петля CLIP 100°",
                 Description = "Петля CLIP 100°, внутренняя",
                 Size = "",
@@ -71,7 +71,7 @@ namespace OSS.WebApplication.Configurations.Entity
             {
                 Article = "71T950A   MB    V250  NI",
                 Name = "Петля CLIP top 95°",
-                Description = "Петля CLIP top 95° (для узких алюминиевых рамок), накладная",
+                Description = "Петля CLIP top 95° (для узких алюминиевых рамок), накладная123_321",
                 Size = "",
                 Currency = "EUR",
                 PurchasePrice = 0,
@@ -82,7 +82,7 @@ namespace OSS.WebApplication.Configurations.Entity
             new ItemDbModel()
             {
                 Article = "71T9550",
-                Name = "Петля CLIP",
+                Name = "Петля CLIP123_321",
                 Description = "Петля CLIP для профильных дверей накладная",
                 Size = "",
                 Currency = "EUR",
@@ -95,7 +95,7 @@ namespace OSS.WebApplication.Configurations.Entity
             {
                 Article = "71T9650",
                 Name = "Петля CLIP TOP",
-                Description = "Петля CLIP TOP для профильных дверей",
+                Description = "Петля CLIP TOP для профильных дверей123_321",
                 Size = "",
                 Currency = "EUR",
                 PurchasePrice = 0,
@@ -105,7 +105,7 @@ namespace OSS.WebApplication.Configurations.Entity
             },
             new ItemDbModel()
             {
-                Article = "71T970A   MB     V50  NI",
+                Article = "71T970A   MB     V50  NI123_321",
                 Name = "Петля CLIP top 95°",
                 Description = "Петля CLIP top 95° (для узких алюминиевых рамок), внутренняя",
                 Size = "",
@@ -119,7 +119,7 @@ namespace OSS.WebApplication.Configurations.Entity
             {
                 Article = "79A5450.T MB45-  V50  NI",
                 Name = "Петля CLIP top -45",
-                Description = "Петля CLIP top -45",
+                Description = "Петля CLIP top -45123_321",
                 Size = "",
                 Currency = "EUR",
                 PurchasePrice = 0,
@@ -130,7 +130,7 @@ namespace OSS.WebApplication.Configurations.Entity
             new ItemDbModel()
             {
                 Article = "79A5450.T MB45-  V50  NI",
-                Name = "Петля CLIP top -30",
+                Name = "Петля CLIP top -30123_321",
                 Description = "Петля CLIP top -30",
                 Size = "",
                 Currency = "EUR",
@@ -143,7 +143,7 @@ namespace OSS.WebApplication.Configurations.Entity
             {
                 Article = "79A5453.T MB15-  V50  NI",
                 Name = "Петля CLIP top -15",
-                Description = "",
+                Description = "123_321",
                 Size = "",
                 Currency = "EUR",
                 PurchasePrice = 0,
@@ -155,7 +155,7 @@ namespace OSS.WebApplication.Configurations.Entity
             {
                 Article = "79A9456.T MB30+  V50  NI",
                 Name = "Петля CLIP top +30 III",
-                Description = "Петля CLIP top +30 III",
+                Description = "Петля CLIP top +30 III123_321",
                 Size = "",
                 Currency = "EUR",
                 PurchasePrice = 0,
@@ -165,7 +165,7 @@ namespace OSS.WebApplication.Configurations.Entity
             },
             new ItemDbModel()
             {
-                Article = "193L6100   MPL   V500  NI",
+                Article = "193L6100   MPL   V500  NI123_321",
                 Name = "Ответная планка для петли MODUL",
                 Description = "Ответная планка для петли MODUL крестообразная под саморез",
                 Size = "",
@@ -178,7 +178,7 @@ namespace OSS.WebApplication.Configurations.Entity
             new ItemDbModel()
             {
                 Article = "199.8130   MPL    V50  NI",
-                Name = "Проводник MODUL +90",
+                Name = "Проводник MODUL +90123_321",
                 Description = "Ответная планка для петли MODUL крестообразная под саморез",
                 Size = "",
                 Currency = "EUR",

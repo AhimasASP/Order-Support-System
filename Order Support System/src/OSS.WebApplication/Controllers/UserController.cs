@@ -35,7 +35,6 @@ namespace OSS.WebApplication.Controllers
 
         [HttpGet]
         [SwaggerResponse(200, "Show users list", typeof(string))]
-        //[Authorize]
         [SwaggerResponse(200, "Show user list")]
         public async Task<IActionResult> Index(CancellationToken token)
         {
@@ -44,7 +43,6 @@ namespace OSS.WebApplication.Controllers
 
         [HttpPost]
         [SwaggerResponse(201, "Add new user", typeof(string))]
-        //[Authorize]
         public async Task<IActionResult> CreateAsync([FromBody]CreateUserRequest request, CancellationToken cancellationToken)
         {
             return Ok(await _userService.CreateAsync(request, cancellationToken));
