@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -29,7 +30,7 @@ namespace OSS.Data.Repositories
 
         public async Task<TModel> GetAsync(Guid id, CancellationToken token)
         {
-            return await _dbSet.FindAsync(id);
+            return await _dbSet.FindAsync(id.ToString());
         }
 
         public async Task<List<TModel>> GetFilteredAsync(Expression<Func<TModel, bool>> expression, CancellationToken token)
@@ -40,9 +41,9 @@ namespace OSS.Data.Repositories
 
         public async Task<string> CreateAsync(TModel model, CancellationToken token)
         {
-            await _dbSet.AddAsync(model, token); 
+            var result = await _dbSet.AddAsync(model, token);
             await _dbContext.SaveChangesAsync(token);
-            return "Success!";
+            return result.Entity.Id.ToString();
         }
 
         public async Task<string> UpdateAsync(TModel model, CancellationToken token)

@@ -1,12 +1,17 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using OSS.Common.Constants;
 using OSS.Data.Interfaces;
 using OSS.Domain.Common.Models.DbModels;
 using OSS.Domain.Common.SeedData;
 using OSS.Domain.Interfaces.Services;
+using OSS.Model.Api.Requests;
+using OSS.Model.DbModels;
 using OSS.WebApplication.Configurations.Entity;
 
 namespace OSS.Domain.Logic.Services
@@ -18,14 +23,18 @@ namespace OSS.Domain.Logic.Services
         private readonly IUserRepository _userRepository;
         private readonly IItemRepository _itemRepository;
         private readonly IOrderRepository _orderRepository;
+        private readonly IImageRepository _imageRepository;
+        private readonly IFileRepository _fileRepository;
 
-        public SeedService(OssDbContext dbContext, IRoleRepository roleRepository, IUserRepository userRepository, IItemRepository itemRepository, IOrderRepository orderRepository)
+        public SeedService(OssDbContext dbContext, IRoleRepository roleRepository, IUserRepository userRepository, IItemRepository itemRepository, IOrderRepository orderRepository, IImageRepository imageRepository, IFileRepository fileRepository)
         {
             _dbContext = dbContext;
             _roleRepository = roleRepository;
             _userRepository = userRepository;
             _itemRepository = itemRepository;
             _orderRepository = orderRepository;
+            _imageRepository = imageRepository;
+            _fileRepository = fileRepository;
         }
 
         public async Task SeedRoles()
@@ -95,6 +104,31 @@ namespace OSS.Domain.Logic.Services
                  await _orderRepository.CreateAsync(order, CancellationToken.None);
              }
 
+        }
+
+        public async Task SeedImages()
+        {            
+            if (await _dbContext.Images.AnyAsync()) return;
+
+            var orderNeeded = await _orderRepository.GetFilteredAsync(
+                _ => _.OrderNumber == "dog111-1111", CancellationToken.None);
+
+            var imageSeedPaths = Directory.GetFiles(ConstantsValue.ImageSeedPath);
+           
+            foreach (var path in imageSeedPaths)
+            {
+                var imageDbModel = new ImageDbModel
+                {
+                    Owner = orderNeeded[0].Id.ToString(),
+                    CreationDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
+                    ModificationDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
+                };
+                var imageId = await _imageRepository.CreateAsync(imageDbModel, CancellationToken.None);
+
+                var imageStream = await _fileRepository.GetFileAsync(path, CancellationToken.None);
+
+                await _fileRepository.AddFileAsync(imageStream, imageId, CancellationToken.None);
+            }
         }
     }
 

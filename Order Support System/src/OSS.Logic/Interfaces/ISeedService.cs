@@ -8,6 +8,6 @@ namespace OSS.Domain.Interfaces.Services
         Task SeedUsers();
         Task SeedItems();
         Task SeedOrders();
-        
+        Task SeedImages();
     }
 }

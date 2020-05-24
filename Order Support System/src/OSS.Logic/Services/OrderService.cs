@@ -19,17 +19,22 @@ namespace OSS.Domain.Logic.Services
     {
 
         private readonly IOrderRepository _repository;
+        private readonly IImageService _imageService;
         private readonly IHttpContextAccessor _accessor;
+        private readonly IFileRepository _fileRepository;
 
-        public OrderService(IOrderRepository repository, IHttpContextAccessor accessor)
+        public OrderService(IOrderRepository repository, IHttpContextAccessor accessor, IImageRepository imageRepository, IImageService imageService, IFileRepository fileRepository)
         {
             _repository = repository;
             _accessor = accessor;
+            _imageService = imageService;
+            _fileRepository = fileRepository;
         }
 
         public async Task<OrderModel> CreateAsync(CreateOrderRequest request, CancellationToken token)
         {
             var designerId = _accessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            string[] images = new[] {ConstantsValue.ImagePath};
             var model = new OrderDbModel()
             {
                 DesignerId = designerId,
@@ -45,7 +50,8 @@ namespace OSS.Domain.Logic.Services
                 IsCredit = request.IsCredit,
                 CreditMonthCount = request.CreditMonthCount,
                 FinalSum = request.FinalSum,
-                Comment = request.Comment
+                Comment = request.Comment,
+                //Images = images
             };
 
             await _repository.CreateAsync(model, token);
@@ -56,7 +62,19 @@ namespace OSS.Domain.Logic.Services
 
         public async Task<OrderModel> GetAsync(Guid id, CancellationToken token)
         {
-            return (await _repository.GetAsync(id, token)).ConvertTo<OrderModel>();
+            var order = (await _repository.GetAsync(id, token)).ConvertTo<OrderModel>();
+            var images = await _imageService.GetFilteredAsync(id.ToString(), token);
+            var imagesAsBase64Array = new string[images.Count];
+            int i = 0;
+            foreach (var image in images)
+            {
+                imagesAsBase64Array[i] = await _fileRepository.GetFileAsync(ConstantsValue.ImagePath + image.Id, token);
+                i++;
+            }
+
+            order.Images = imagesAsBase64Array;
+
+            return order;
         }
 
         public async Task<List<OrderModel>> GetListAsync(CancellationToken token)

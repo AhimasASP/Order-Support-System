@@ -16,6 +16,7 @@ using OSS.Data.Repositories;
 using OSS.Domain.Interfaces.Services;
 using OSS.Domain.Logic.Services;
 using OSS.Domain.Services.Search;
+using OSS.Logic.Services;
 using OSS.WebApplication.Configurations.Entity;
 using OSS.WebApplication.Configurations.Identity;
 using OSS.WebApplication.Swagger;
@@ -41,16 +42,27 @@ namespace OSS.WebApplication
             services.RegisterIdentity();
             services.AddHttpContextAccessor();
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader());
+            });
+
             services.AddScoped<IItemRepository, ItemRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
+            services.AddScoped<IImageRepository, ImageRepository>();
+            services.AddScoped<IFileRepository, FileRepository>();
 
             services.AddScoped<IItemService, ItemService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<ISeedService, SeedService>();
             services.AddScoped<ISearchService, SearchService>();
+            services.AddScoped<IImageService, ImageService>();
             services.AddScoped<IAuthorizationService, AuthorizationService>();
         }
 
@@ -65,6 +77,7 @@ namespace OSS.WebApplication
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseCors("CorsPolicy");
 
             app.UseAuthentication();
             app.UseAuthorization();
