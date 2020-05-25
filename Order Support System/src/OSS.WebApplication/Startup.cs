@@ -17,6 +17,7 @@ using OSS.Domain.Interfaces.Services;
 using OSS.Domain.Logic.Services;
 using OSS.Domain.Services.Search;
 using OSS.Logic.Services;
+using OSS.Logic.Services.Helpers;
 using OSS.WebApplication.Configurations.Entity;
 using OSS.WebApplication.Configurations.Identity;
 using OSS.WebApplication.Swagger;
@@ -64,6 +65,7 @@ namespace OSS.WebApplication
             services.AddScoped<ISearchService, SearchService>();
             services.AddScoped<IImageService, ImageService>();
             services.AddScoped<IAuthorizationService, AuthorizationService>();
+            services.AddScoped<ImageConverter>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

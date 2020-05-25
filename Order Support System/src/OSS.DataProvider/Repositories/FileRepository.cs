@@ -12,14 +12,14 @@ namespace OSS.Data.Repositories
     {
         public async Task AddFileAsync(string fileBody, string fileId, CancellationToken token)
         {
-            byte[] bytes = Convert.FromBase64String(fileBody);
+            var bytes = Convert.FromBase64String(fileBody);
 
                 await File.WriteAllBytesAsync(ConstantsValue.ImagePath + fileId + ".jpg", bytes, token);
         }
 
         public async Task<string> GetFileAsync(string filePath, CancellationToken token)
         {
-            byte[] bytes = await File.ReadAllBytesAsync(filePath + ".jpg", token);
+            var bytes = await File.ReadAllBytesAsync(filePath, token);
 
             return Convert.ToBase64String(bytes);
         }

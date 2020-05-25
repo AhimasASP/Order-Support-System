@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using OSS.Domain.Interfaces.Services;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace OSS.WebApplication.Controllers
 {
@@ -11,5 +14,19 @@ namespace OSS.WebApplication.Controllers
     [ApiController]
     public class ImageController : ControllerBase
     {
+        private readonly IImageService _imageService;
+
+        public ImageController(IImageService imageService)
+        {
+            _imageService = imageService;
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        [SwaggerResponse(200, "Show item", typeof(string))]
+        public async Task<IActionResult> GetAsync(string id, CancellationToken token)
+        {
+            return Ok(await _imageService.GetAsync(id, token));
+        }
     }
 }

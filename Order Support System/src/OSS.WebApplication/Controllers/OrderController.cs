@@ -63,6 +63,14 @@ namespace OSS.WebApplication.Controllers
             return Ok(await _orderService.UpdateAsync(id, request, token));
         }
 
+        [HttpGet]
+        [Route("{param}")]
+        [SwaggerResponse(200, "Search orders", typeof(string))]
+        public async Task<IActionResult> SearchAsync(string param, CancellationToken token)
+        {
+            return Ok(await _orderService.SearchAsync(param, token));
+        }
+
         [HttpDelete]
         [Route("{id}")]
         [SwaggerResponse(201, "Delete order")]

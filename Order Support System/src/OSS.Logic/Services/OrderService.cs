@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using OSS.Common.Constants;
 using OSS.Data.Interfaces;
+using OSS.Domain.Common.Models.ApiModels;
 using OSS.WebApplication.Configurations.Entity;
 using ServiceStack;
 
@@ -50,8 +51,7 @@ namespace OSS.Domain.Logic.Services
                 IsCredit = request.IsCredit,
                 CreditMonthCount = request.CreditMonthCount,
                 FinalSum = request.FinalSum,
-                Comment = request.Comment,
-                //Images = images
+                Comment = request.Comment
             };
 
             await _repository.CreateAsync(model, token);
@@ -68,7 +68,7 @@ namespace OSS.Domain.Logic.Services
             int i = 0;
             foreach (var image in images)
             {
-                imagesAsBase64Array[i] = await _fileRepository.GetFileAsync(ConstantsValue.ImagePath + image.Id, token);
+                imagesAsBase64Array[i] = await _fileRepository.GetFileAsync(ConstantsValue.ImagePath + @"\Cropped\" + image.Id + ".jpg", token) + "|||" + image.Id;
                 i++;
             }
 
@@ -106,6 +106,19 @@ namespace OSS.Domain.Logic.Services
             await _repository.UpdateAsync(model, token);
 
             return model.ConvertTo<OrderModel>();
+        }
+
+        public async Task<List<OrderModel>> SearchAsync(string param, CancellationToken token)
+        {
+          List<OrderDbModel> orderList = new List<OrderDbModel>();
+
+            orderList.AddRange(await _repository.GetFilteredAsync(_ =>
+                _.Address.ToLower().Contains(param) ||
+                _.ClientName.ToLower().Contains(param) ||
+                _.OrderNumber.ToLower().Contains(param) ||
+                _.Phone.ToLower().Contains(param), token));
+
+            return orderList.ConvertTo<List<OrderModel>>();
         }
 
         public async Task<string> DeleteAsync(Guid id, CancellationToken token)

@@ -76,6 +76,12 @@ namespace OSS.Domain.Logic.Services
 
             return user.ConvertTo<UserModel>();
         }
+
+        public Task<List<UserModel>> SearchAsync(string param, CancellationToken token)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<string> DeleteAsync(Guid id, CancellationToken token)
         {
             var result = await _repository.SoftDeleteAsync(id.ToString());

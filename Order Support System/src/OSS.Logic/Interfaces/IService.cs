@@ -18,6 +18,8 @@ namespace OSS.Domain.Interfaces.Services
 
         Task<TModel> UpdateAsync(Guid id, TUpdateRequest request, CancellationToken token);
 
+        Task<List<TModel>> SearchAsync(string param, CancellationToken token);
+
         Task<string> DeleteAsync(Guid id, CancellationToken token);
     }
 }

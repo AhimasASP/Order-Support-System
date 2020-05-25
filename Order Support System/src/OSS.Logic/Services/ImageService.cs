@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using OSS.Common.Constants;
 using OSS.Data.Interfaces;
 using OSS.Domain.Interfaces.Services;
 using OSS.Model.Api.Requests;
@@ -15,10 +16,12 @@ namespace OSS.Logic.Services
     {
 
         private readonly IImageRepository _imageRepository;
+        private readonly IFileRepository _fileRepository;
 
-        public ImageService(IImageRepository imageRepository)
+        public ImageService(IImageRepository imageRepository, IFileRepository fileRepository)
         {
             _imageRepository = imageRepository;
+            _fileRepository = fileRepository;
         }
 
         public async Task<ImageDbModel> CreateAsync(CreateImageRequest request, CancellationToken token)
@@ -35,12 +38,13 @@ namespace OSS.Logic.Services
             return image;
         }
 
-        public Task<ImageDbModel> GetAsync(Guid id, CancellationToken token)
+        public async Task<string> GetAsync(string id, CancellationToken token)
         {
-            throw new NotImplementedException();
+            var filePath = ConstantsValue.ImagePath + @"\Processed\" + id + ".jpg";
+            return await _fileRepository.GetFileAsync(filePath, token);
         }
 
-        public Task<List<ImageDbModel>> GetListAsync(CancellationToken token)
+        public Task<List<string>> GetListAsync(CancellationToken token)
         {
             throw new NotImplementedException();
         }
@@ -51,12 +55,12 @@ namespace OSS.Logic.Services
         }
 
 
-        public Task<ImageDbModel> UpdateAsync(Guid id, UpdateImageRequest request, CancellationToken token)
+        public Task<ImageDbModel> UpdateAsync(string id, UpdateImageRequest request, CancellationToken token)
         {
             throw new NotImplementedException();
         }
 
-        public Task<string> DeleteAsync(Guid id, CancellationToken token)
+        public Task<string> DeleteAsync(string id, CancellationToken token)
         {
             throw new NotImplementedException();
         }

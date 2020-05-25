@@ -87,6 +87,11 @@ namespace OSS.Domain.Logic.Services
             return model.ConvertTo<ItemModel>();
         }
 
+        public Task<List<ItemModel>> SearchAsync(string param, CancellationToken token)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<string> DeleteAsync(Guid itemId, CancellationToken token)
         {
             

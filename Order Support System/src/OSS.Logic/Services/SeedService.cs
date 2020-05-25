@@ -10,6 +10,7 @@ using OSS.Data.Interfaces;
 using OSS.Domain.Common.Models.DbModels;
 using OSS.Domain.Common.SeedData;
 using OSS.Domain.Interfaces.Services;
+using OSS.Logic.Services.Helpers;
 using OSS.Model.Api.Requests;
 using OSS.Model.DbModels;
 using OSS.WebApplication.Configurations.Entity;
@@ -26,7 +27,9 @@ namespace OSS.Domain.Logic.Services
         private readonly IImageRepository _imageRepository;
         private readonly IFileRepository _fileRepository;
 
-        public SeedService(OssDbContext dbContext, IRoleRepository roleRepository, IUserRepository userRepository, IItemRepository itemRepository, IOrderRepository orderRepository, IImageRepository imageRepository, IFileRepository fileRepository)
+        private readonly ImageConverter _imageConverter;
+
+        public SeedService(OssDbContext dbContext, IRoleRepository roleRepository, IUserRepository userRepository, IItemRepository itemRepository, IOrderRepository orderRepository, IImageRepository imageRepository, IFileRepository fileRepository, ImageConverter imageConverter)
         {
             _dbContext = dbContext;
             _roleRepository = roleRepository;
@@ -35,6 +38,7 @@ namespace OSS.Domain.Logic.Services
             _orderRepository = orderRepository;
             _imageRepository = imageRepository;
             _fileRepository = fileRepository;
+            this._imageConverter = imageConverter;
         }
 
         public async Task SeedRoles()
@@ -128,6 +132,8 @@ namespace OSS.Domain.Logic.Services
                 var imageStream = await _fileRepository.GetFileAsync(path, CancellationToken.None);
 
                 await _fileRepository.AddFileAsync(imageStream, imageId, CancellationToken.None);
+
+                await _imageConverter.ResizeTo800X600(ConstantsValue.ImagePath + imageId + ".jpg");
             }
         }
     }
