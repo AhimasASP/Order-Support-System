@@ -114,7 +114,7 @@ namespace OSS.Domain.Logic.Services
         {            
             if (await _dbContext.Images.AnyAsync()) return;
 
-            var orderNeeded = await _orderRepository.GetFilteredAsync(
+            var owner = await _orderRepository.GetFilteredAsync(
                 _ => _.OrderNumber == "dog111-1111", CancellationToken.None);
 
             var imageSeedPaths = Directory.GetFiles(ConstantsValue.ImageSeedPath);
@@ -123,7 +123,7 @@ namespace OSS.Domain.Logic.Services
             {
                 var imageDbModel = new ImageDbModel
                 {
-                    Owner = orderNeeded[0].Id.ToString(),
+                    Owner = owner[0].Id.ToString(),
                     CreationDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
                     ModificationDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
                 };

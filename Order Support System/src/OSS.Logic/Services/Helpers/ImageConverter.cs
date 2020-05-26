@@ -13,8 +13,8 @@ namespace OSS.Logic.Services.Helpers
             var processedPath = ConstantsValue.ImagePath + @"\Processed\" + Path.GetFileName(path);
             var croppedPath = ConstantsValue.ImagePath + @"\Cropped\" + Path.GetFileName(path);
 
-            await Resize(path, processedPath, 800, 600);
-            await Resize(path, croppedPath, 400, 300);
+            await Resize(path, processedPath, 1600, 1200);
+            await Resize(path, croppedPath, 300, 200);
 
         }
 

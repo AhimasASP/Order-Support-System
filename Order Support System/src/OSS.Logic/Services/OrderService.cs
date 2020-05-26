@@ -63,6 +63,10 @@ namespace OSS.Domain.Logic.Services
         public async Task<OrderModel> GetAsync(Guid id, CancellationToken token)
         {
             var order = (await _repository.GetAsync(id, token)).ConvertTo<OrderModel>();
+            if (order == null)
+            {
+                return null;
+            }
             var images = await _imageService.GetFilteredAsync(id.ToString(), token);
             var imagesAsBase64Array = new string[images.Count];
             int i = 0;

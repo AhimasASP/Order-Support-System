@@ -23,5 +23,12 @@ namespace OSS.Data.Repositories
 
             return Convert.ToBase64String(bytes);
         }
+
+        public async Task DeleteFileAsync(string filePath, CancellationToken token)
+        {
+
+             File.Delete(filePath);
+
+        }
     }
 }

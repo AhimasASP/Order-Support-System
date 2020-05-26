@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection.Metadata.Ecma335;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -43,7 +44,7 @@ namespace OSS.Data.Repositories
         {
             var result = await _dbSet.AddAsync(model, token);
             await _dbContext.SaveChangesAsync(token);
-            return result.Entity.Id.ToString();
+            return result.Entity.Id;
         }
 
         public async Task<string> UpdateAsync(TModel model, CancellationToken token)
@@ -56,7 +57,11 @@ namespace OSS.Data.Repositories
 
         public async Task<string> DeleteAsync(Guid id, CancellationToken token)
         {
-            var model = await _dbSet.FindAsync(id);
+            var model = await _dbSet.FindAsync(id.ToString());
+            if (model == null)
+            {
+                return "Failed!";
+            }
             _dbSet.Remove(model);
             await _dbContext.SaveChangesAsync(token);
             return "Success!";

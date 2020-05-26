@@ -22,6 +22,6 @@ namespace OSS.Domain.Interfaces.Services
 
         Task<ImageDbModel> UpdateAsync(string id, UpdateImageRequest request, CancellationToken token);
 
-        Task<string> DeleteAsync(string id, CancellationToken token);
+        Task<string> DeleteAsync(Guid id, CancellationToken token);
     }
 }

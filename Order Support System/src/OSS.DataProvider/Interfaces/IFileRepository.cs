@@ -8,5 +8,7 @@ namespace OSS.Data.Interfaces
         Task AddFileAsync(string fileBody, string fileId, CancellationToken token);
 
         Task<string> GetFileAsync(string filePath, CancellationToken token);
+
+        Task DeleteFileAsync(string filePath, CancellationToken token);
     }
 }

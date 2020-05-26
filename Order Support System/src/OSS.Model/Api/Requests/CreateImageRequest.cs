@@ -3,6 +3,6 @@
     public class CreateImageRequest
     {
         public string Owner { get; set; }
-        public string Path { get; set; }
+        public string Body { get; set; }
     }
 }
