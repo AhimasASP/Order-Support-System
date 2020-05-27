@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
+using OSS.Common.Constants;
 using OSS.Data.Interfaces;
 using OSS.Domain.Common.Models.Api.Requests;
 using OSS.Domain.Common.Models.ApiModels;
@@ -14,10 +15,14 @@ namespace OSS.Domain.Logic.Services
     public class ItemService : IItemService
     {
         private readonly IItemRepository _repository;
+        private readonly IImageService _imageService;
+        private readonly IFileRepository _fileRepository;
 
-        public ItemService(IItemRepository repository)
+        public ItemService(IItemRepository repository, IImageService imageService, IFileRepository fileRepository)
         {
             _repository = repository;
+            _imageService = imageService;
+            _fileRepository = fileRepository;
         }
 
         public async Task<ItemModel> CreateAsync(CreateItemRequest request, CancellationToken token)
@@ -43,7 +48,24 @@ namespace OSS.Domain.Logic.Services
 
         public async Task<ItemModel> GetAsync(Guid itemId, CancellationToken token)
         {
-            return (await _repository.GetAsync(itemId, token)).ConvertTo<ItemModel>();
+
+            var item = (await _repository.GetAsync(itemId, token)).ConvertTo<ItemModel>();
+            if (item == null)
+            {
+                return null;
+            }
+            var images = await _imageService.GetFilteredAsync(itemId.ToString(), token);
+            var imagesAsBase64Array = new string[images.Count];
+            int i = 0;
+            foreach (var image in images)
+            {
+                imagesAsBase64Array[i] = await _fileRepository.GetFileAsync(ConstantsValue.ImagePath + @"\Cropped\" + image.Id + ".jpg", token) + "|||" + image.Id;
+                i++;
+            }
+
+            item.Images = imagesAsBase64Array;
+
+            return item;
         }
 
         public async Task<List<ItemModel>> GetListAsync(CancellationToken token)
@@ -87,9 +109,17 @@ namespace OSS.Domain.Logic.Services
             return model.ConvertTo<ItemModel>();
         }
 
-        public Task<List<ItemModel>> SearchAsync(string param, CancellationToken token)
+        public async Task<List<ItemModel>> SearchAsync(string param, CancellationToken token)
         {
-            throw new NotImplementedException();
+            List<ItemDbModel> orderList = new List<ItemDbModel>();
+
+            orderList.AddRange(await _repository.GetFilteredAsync(_ =>
+                _.Article.ToLower().Contains(param) ||
+                _.Type.ToLower().Contains(param) ||
+                _.Name.ToLower().Contains(param) ||
+                _.Description.ToLower().Contains(param), token));
+
+            return orderList.ConvertTo<List<ItemModel>>();
         }
 
         public async Task<string> DeleteAsync(Guid itemId, CancellationToken token)

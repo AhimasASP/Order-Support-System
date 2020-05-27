@@ -35,7 +35,6 @@ namespace OSS.Domain.Logic.Services
         public async Task<OrderModel> CreateAsync(CreateOrderRequest request, CancellationToken token)
         {
             var designerId = _accessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            string[] images = new[] {ConstantsValue.ImagePath};
             var model = new OrderDbModel()
             {
                 DesignerId = designerId,

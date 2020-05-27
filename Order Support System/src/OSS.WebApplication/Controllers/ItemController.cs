@@ -14,7 +14,7 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace OSS.WebApplication.Controllers
 {
     [Route("[controller]/[action]")]
-    [Authorize]
+    //[Authorize]
     public class ItemController : Controller
     {
         private readonly IItemService _itemService;
@@ -60,6 +60,14 @@ namespace OSS.WebApplication.Controllers
         public async Task<IActionResult> ModifyAsync(Guid id, [FromBody]UpdateItemRequest request, CancellationToken token)
         {
             return Ok(await _itemService.UpdateAsync(id, request, token));
+        }
+
+        [HttpGet]
+        [Route("{param}")]
+        [SwaggerResponse(200, "Search items", typeof(string))]
+        public async Task<IActionResult> SearchAsync(string param, CancellationToken token)
+        {
+            return Ok(await _itemService.SearchAsync(param, token));
         }
 
         [HttpDelete]
