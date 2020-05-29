@@ -27,7 +27,7 @@ namespace OSS.Domain.Logic.Services
 
         public async Task<UserModel> CreateAsync(CreateUserRequest request, CancellationToken token)
         {
-            UserDbModel user = new UserDbModel
+            UserDbModel model = new UserDbModel
             {
                 UserName = request.UserName,
                 PasswordHash = request.Password,
@@ -40,9 +40,16 @@ namespace OSS.Domain.Logic.Services
                 ModificationDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
             };
 
-            var result = await _repository.CreateAsync(user);
+            var result = await _repository.CreateAsync(model);
+            var user = model.ConvertTo<UserModel>();
 
-            return user.ConvertTo<UserModel>();
+            if (!result.Succeeded)
+            {
+                user.Errors = result.Errors;
+                user.IsValid = false;
+            }
+
+            return user;
         }
 
         public async Task<UserModel> GetAsync(Guid id, CancellationToken token)

@@ -12,8 +12,7 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace OSS.WebApplication.Controllers
 {
     [Route("[Controller]/[action]")]
-    [Authorize(Roles = "admin")]
-    [Authorize]
+    //[Authorize(Roles = "admin")]
     public class UserController : Controller
     {
         private readonly IUserService _userService;
@@ -45,13 +44,20 @@ namespace OSS.WebApplication.Controllers
         [SwaggerResponse(201, "Add new user", typeof(string))]
         public async Task<IActionResult> CreateAsync([FromBody]CreateUserRequest request, CancellationToken cancellationToken)
         {
-            return Ok(await _userService.CreateAsync(request, cancellationToken));
+            var model = await _userService.CreateAsync(request, cancellationToken);
+
+            if (model.IsValid)
+            {
+                return Ok(model);
+            }
+
+            return BadRequest(model);
+
         }
 
         [HttpPut]
         [Route("{id}")]
         [SwaggerResponse(201, "Modify user", typeof(string))]
-        //[Authorize]
         public async Task<IActionResult> ModifyAsync(Guid id, [FromBody] UpdateUserRequest request, CancellationToken token)
         {
             return Ok(await _userService.UpdateAsync(id, request, token));
@@ -60,7 +66,6 @@ namespace OSS.WebApplication.Controllers
         [HttpDelete]
         [Route("{id}")]
         [SwaggerResponse(201, "Delete user")]
-        //[Authorize]
         public async Task<IActionResult> DeleteAsync(Guid id, CancellationToken token)
         {
             return Ok(await _userService.DeleteAsync(id, token));
