@@ -20,6 +20,7 @@ namespace OSS.Domain.Logic.Services
         public async Task<string> LogInAsync(LoginRequest request)
         {
             UserDbModel user = await _userManager.FindByNameAsync(request.UserName);
+      
 
             if (user != null)
             {
@@ -28,8 +29,9 @@ namespace OSS.Domain.Logic.Services
 
                 if (result.Succeeded)
                 {
-                    await _signInManager.SignInAsync(user, false);
-                    return "Ok!";
+                      await _signInManager.SignInAsync(user, false);
+
+                    return "ok";
                 }
             }
 

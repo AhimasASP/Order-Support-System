@@ -13,7 +13,7 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace OSS.WebApplication.Controllers
 {
     [Route("[controller]/[action]")]
-    [Authorize]
+    //[Authorize]
     public class OrderController : Controller
     {
         private readonly IOrderService _orderService;
@@ -61,6 +61,14 @@ namespace OSS.WebApplication.Controllers
             CancellationToken token)
         {
             return Ok(await _orderService.UpdateAsync(id, request, token));
+        }
+
+        [HttpGet]
+        [Route("{param}")]
+        [SwaggerResponse(200, "Search orders", typeof(string))]
+        public async Task<IActionResult> SearchAsync(string param, CancellationToken token)
+        {
+            return Ok(await _orderService.SearchAsync(param, token));
         }
 
         [HttpDelete]

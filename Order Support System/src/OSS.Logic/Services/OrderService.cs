@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using OSS.Common.Constants;
 using OSS.Data.Interfaces;
+using OSS.Domain.Common.Models.ApiModels;
 using OSS.WebApplication.Configurations.Entity;
 using ServiceStack;
 
@@ -19,12 +20,16 @@ namespace OSS.Domain.Logic.Services
     {
 
         private readonly IOrderRepository _repository;
+        private readonly IImageService _imageService;
         private readonly IHttpContextAccessor _accessor;
+        private readonly IFileRepository _fileRepository;
 
-        public OrderService(IOrderRepository repository, IHttpContextAccessor accessor)
+        public OrderService(IOrderRepository repository, IHttpContextAccessor accessor, IImageRepository imageRepository, IImageService imageService, IFileRepository fileRepository)
         {
             _repository = repository;
             _accessor = accessor;
+            _imageService = imageService;
+            _fileRepository = fileRepository;
         }
 
         public async Task<OrderModel> CreateAsync(CreateOrderRequest request, CancellationToken token)
@@ -56,7 +61,23 @@ namespace OSS.Domain.Logic.Services
 
         public async Task<OrderModel> GetAsync(Guid id, CancellationToken token)
         {
-            return (await _repository.GetAsync(id, token)).ConvertTo<OrderModel>();
+            var order = (await _repository.GetAsync(id, token)).ConvertTo<OrderModel>();
+            if (order == null)
+            {
+                return null;
+            }
+            var images = await _imageService.GetFilteredAsync(id.ToString(), token);
+            var imagesAsBase64Array = new string[images.Count];
+            int i = 0;
+            foreach (var image in images)
+            {
+                imagesAsBase64Array[i] = await _fileRepository.GetFileAsync(ConstantsValue.ImagePath + @"\Cropped\" + image.Id + ".jpg", token) + "|||" + image.Id;
+                i++;
+            }
+
+            order.Images = imagesAsBase64Array;
+
+            return order;
         }
 
         public async Task<List<OrderModel>> GetListAsync(CancellationToken token)
@@ -88,6 +109,19 @@ namespace OSS.Domain.Logic.Services
             await _repository.UpdateAsync(model, token);
 
             return model.ConvertTo<OrderModel>();
+        }
+
+        public async Task<List<OrderModel>> SearchAsync(string param, CancellationToken token)
+        {
+          List<OrderDbModel> orderList = new List<OrderDbModel>();
+
+            orderList.AddRange(await _repository.GetFilteredAsync(_ =>
+                _.Address.ToLower().Contains(param) ||
+                _.ClientName.ToLower().Contains(param) ||
+                _.OrderNumber.ToLower().Contains(param) ||
+                _.Phone.ToLower().Contains(param), token));
+
+            return orderList.ConvertTo<List<OrderModel>>();
         }
 
         public async Task<string> DeleteAsync(Guid id, CancellationToken token)

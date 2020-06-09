@@ -15,5 +15,6 @@ namespace OSS.Domain.Common.Models.ApiModels
         public double Price { get; set; }
         public string Photo { get; set; }
         public string Type { get; set; }
+        public string[] Images { get; set; }
     }
 }

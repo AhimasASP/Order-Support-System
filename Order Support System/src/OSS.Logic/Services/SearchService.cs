@@ -5,6 +5,7 @@ using OSS.Data.Interfaces;
 using OSS.Domain.Common.Models.ApiModels;
 using OSS.Domain.Common.Models.DbModels;
 using OSS.Domain.Interfaces.Services;
+using OSS.Domain.Models.ApiModels;
 using ServiceStack;
 
 namespace OSS.Domain.Services.Search
@@ -20,22 +21,37 @@ namespace OSS.Domain.Services.Search
             _orderRepository = orderRepository;
         }
 
-        public async Task<List<SearchResponseModel>> SearchAsync(string param, CancellationToken token)
+        public async Task<List<BaseDbModel>> SearchAsync(string param, CancellationToken token)
         {
-            param = param.ToLower();
+            var searingParams = param.Split("|");
 
-            List<SearchResponseModel> searchList = new List<SearchResponseModel>();
-            searchList.AddRange(await GetSearchItemListAsync(param, token));
-            searchList.AddRange(await GetSearchOrderListAsync(param, token));
+            var searchValue = searingParams[0].ToLower();
+            var searchRegion = searingParams[1];
 
+            var searchList = new List<BaseDbModel>();
+
+            switch (searchRegion)
+
+            {
+                case "order" : 
+                    searchList.AddRange(await GetSearchOrderListAsync(searchValue, token));
+                    break;
+                case "item":
+                    searchList.AddRange(await GetSearchItemListAsync(searchValue, token));
+                    break;
+            }
+            
             return searchList;
 
         }
 
-        private async Task<List<SearchResponseModel>> GetSearchItemListAsync(string param, CancellationToken token)
+        private async Task<List<ItemDbModel>> GetSearchItemListAsync(string param, CancellationToken token)
         {
+
             List<SearchResponseModel> searchItemList = new List<SearchResponseModel>();
-            List<ItemDbModel> itemList = new List<ItemDbModel>();
+
+            var itemList = new List<ItemDbModel>();
+
 
             itemList.AddRange(await _itemRepository.GetFilteredAsync(_ =>
                 _.Article.ToLower().Contains(param) ||
@@ -53,13 +69,14 @@ namespace OSS.Domain.Services.Search
                     Description = item.Description
                 });
             }
-            
-            return searchItemList;
+
+            return itemList;
         }
 
-        private async Task<List<SearchResponseModel>> GetSearchOrderListAsync(string param, CancellationToken token)
+        private async Task<List<OrderDbModel>> GetSearchOrderListAsync(string param, CancellationToken token)
         {
             List<SearchResponseModel> searchOrderList = new List<SearchResponseModel>();
+
             List<OrderDbModel> orderList = new List<OrderDbModel>();
 
             orderList.AddRange(await _orderRepository.GetFilteredAsync(_ =>
@@ -80,7 +97,7 @@ namespace OSS.Domain.Services.Search
                 });
             }
 
-            return searchOrderList;
+            return orderList;
         }
         }
 }

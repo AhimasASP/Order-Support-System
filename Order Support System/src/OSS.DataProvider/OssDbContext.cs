@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using OSS.Domain.Common.Models.ApiModels;
 using OSS.Domain.Common.Models.DbModels;
 using OSS.Domain.Models;
+using OSS.Model.DbModels;
 
 namespace OSS.WebApplication.Configurations.Entity
 {
@@ -15,6 +16,7 @@ namespace OSS.WebApplication.Configurations.Entity
 
 
         public DbSet<UserDbModel> Users { get; set; }
+        public DbSet<ImageDbModel> Images { get; set; }
         public DbSet<OrderDbModel> Orders { get; set; }
         public DbSet<CalculationDbModel> Calculations { get; set; }
         public DbSet<ItemDbModel> Items { get; set; }
@@ -35,6 +37,10 @@ namespace OSS.WebApplication.Configurations.Entity
                 .ValueGeneratedOnAdd();
 
             modelBuilder.Entity<OrderDbModel>()
+                .Property(e => e.Id)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<ImageDbModel>()
                 .Property(e => e.Id)
                 .ValueGeneratedOnAdd();
         }

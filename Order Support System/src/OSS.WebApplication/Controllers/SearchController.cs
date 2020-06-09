@@ -13,7 +13,7 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace OSS.WebApplication.Controllers
 {
     [Route("[controller]/[action]")]
-    [Authorize]
+    //[Authorize]
     public class SearchController : Controller
     {
        

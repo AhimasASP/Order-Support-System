@@ -53,15 +53,27 @@ namespace OSS.Data.Repositories
             return _userManager.Users.Where(expression).ToListAsync();
         }
 
-        public async Task<string> CreateAsync(UserDbModel model)
+        public async Task<IdentityResult> CreateAsync(UserDbModel model)
         {
             if (model.PasswordHash == null)
             {
                 model.PasswordHash = ConstantsValue.DefaultPassword;
             }
+
+            var role = "user";
+
             var result = await _userManager.CreateAsync(model, model.PasswordHash);
-          
-            return model.Id;
+
+            if (result.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(model, role);
+                await _userManager.AddClaimAsync(model, new System.Security.Claims.Claim("userName", model.UserName));
+                await _userManager.AddClaimAsync(model, new System.Security.Claims.Claim("userFirstName", model.FirstName));
+                await _userManager.AddClaimAsync(model, new System.Security.Claims.Claim("userLastName", model.LastName));
+                await _userManager.AddClaimAsync(model, new System.Security.Claims.Claim("userRole", role));
+            }
+
+            return result;
         }
 
         public async Task<bool> UpdateAsync(UserDbModel model)
